@@ -6,8 +6,6 @@ import (
 	"sync"
 	"time"
 
-	"regexp"
-
 	"crypto/tls"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -15,10 +13,6 @@ import (
 	"encoding/json"
 	"bytes"
 	"io/ioutil"
-)
-
-var (
-	keyRegExp = regexp.MustCompile("[^a-zA-Z0-9:_]")
 )
 
 // Exporter exports jolokia metrics for prometheus.
@@ -147,11 +141,6 @@ func (e *Exporter) collect(ch chan<- prometheus.Metric) error {
 	return nil
 }
 
-// converts any given key string to a prometheus acceptable key string
-func keyToSnake(key string) string {
-	return keyRegExp.ReplaceAllString(key, "_")
-}
-
 // Collects metrics, implements prometheus.Collector.
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	e.mutex.Lock() // To protect metrics from concurrent collects.
@@ -174,6 +163,7 @@ func (e *Exporter) prepare(config *Config) (error) {
 		}
 
 		e.metricMapping[reqMetric.String()] = m.Target
+		log.Debugf("Adding mapping for %q to %q", reqMetric.String(), m.Target)
 		req = append(req, reqMetric)
 	}
 

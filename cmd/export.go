@@ -14,7 +14,6 @@ import (
 	"github.com/prometheus/common/version"
 	"github.com/scalify/jolokia_exporter/jolokia"
 	"github.com/spf13/cobra"
-	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -47,9 +46,10 @@ var exportCmd = &cobra.Command{
 
 		logger := log.Base()
 		if verbose {
-			logger.SetLevel(string(logrus.DebugLevel))
+			logger.SetLevel("debug")
+			logger.Debug("Starting in debug level")
 		} else {
-			logger.SetLevel(string(logrus.WarnLevel))
+			logger.SetLevel("warn")
 		}
 		exp, err := jolokia.NewExporter(logger, config, jolokia.Namespace, insecure, endpoint, basicAuthUser, basicAuthPassword)
 		if err != nil {

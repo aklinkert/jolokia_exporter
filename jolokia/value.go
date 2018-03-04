@@ -6,14 +6,17 @@ import (
 	"encoding/json"
 	"errors"
 	"strings"
+	"regexp"
 	"github.com/iancoleman/strcase"
 )
 
 var (
 	floatType = reflect.TypeOf(float64(0))
-	stringType = reflect.TypeOf("")
 
 	errNotAFloat = errors.New("value is not a float")
+
+	keyRegExp = regexp.MustCompile("[^a-zA-Z0-9_]")
+	underscoreRegExp = regexp.MustCompile("[_]{2,}")
 )
 
 // toFloat converts a given interface to a float64 value.
@@ -57,7 +60,7 @@ func getValues(target string, msg json.RawMessage) (map[string]float64, error) {
 	var value NestedValue
 	if err := json.Unmarshal(msg, &value); err == nil {
 		for key, val := range value {
-			nestedResult, err := getValues(strings.Join([]string{target, strcase.ToSnake(key)}, "_"), val)
+			nestedResult, err := getValues(sanitize(strings.Join([]string{target, key}, "_")), val)
 			if err != nil {
 				return nil, err
 			}
@@ -96,4 +99,9 @@ func mergeMaps(v1, v2 map[string]float64) map[string]float64 {
 	}
 
 	return v1
+}
+
+func sanitize(key string) string {
+	snakedKey := keyRegExp.ReplaceAllString(strcase.ToSnake(key), "_")
+	return strings.Trim(underscoreRegExp.ReplaceAllString(snakedKey, "_"), "_")
 }

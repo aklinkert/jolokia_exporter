@@ -25,14 +25,14 @@ type MetricSource struct {
 
 // RequestMetric holds the info for jolokia what to export
 type RequestMetric struct {
-	Type string `json:"type"`
+	Type      string `json:"type"`
 	Attribute string `json:"attribute,omitempty"`
-	Mbean string `json:"mbean"`
-	Path string `json:"path,omitempty"`
+	Mbean     string `json:"mbean"`
+	Path      string `json:"path,omitempty"`
 }
 
 func (m RequestMetric) String() string {
-	return fmt.Sprintf("%s;%s:%s:%s", m.Type, m.Mbean, m.Attribute, m.Path)
+	return sanitize(fmt.Sprintf("%s:%s:%s", m.Mbean, m.Attribute, m.Path))
 }
 
 // Request is a jolokia request holding a slice of RequestMetrics
@@ -40,7 +40,7 @@ type Request []RequestMetric
 
 // Response is a jolokia response with metrics
 type Response []struct {
-	Request RequestMetric `json:"request"`
+	Request RequestMetric   `json:"request"`
 	Value   json.RawMessage `json:"value"`
 }
 

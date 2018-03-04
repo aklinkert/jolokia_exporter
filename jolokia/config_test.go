@@ -29,7 +29,7 @@ var expectedConfig = &Config{
 		},
 		{
 			Source: MetricSource{
-				Mbean:     "java.lang:type=OperatingSystem",
+				Mbean: "java.lang:type=OperatingSystem",
 			},
 			Target: "java_os",
 		},
