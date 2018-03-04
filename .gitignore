@@ -1,0 +1,4 @@
+vendor
+.env
+jolokia_exporter
+bin

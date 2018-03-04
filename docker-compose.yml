@@ -1,0 +1,24 @@
+version: "3"
+services:
+  fixtures:
+    build:
+      context: fixtures
+    image: scalify/jolokia_exporter_test_server
+    ports:
+      - "3000:3000"
+  exporter:
+    build:
+      context: .
+    image: scalify/jolokia_exporter
+    volumes:
+      - "./fixtures:/fixtures"
+    command: [
+      "export", "/fixtures/config.yaml", "http://fixtures:3000/manage/jolokia",
+      "--basic-auth-user", "admin",
+      "--basic-auth-password", "secret",
+      "--insecure"
+    ]
+    links:
+      - fixtures
+    ports:
+      - "9422:9422"

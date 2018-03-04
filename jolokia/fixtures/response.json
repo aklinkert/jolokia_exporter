@@ -1,0 +1,62 @@
+[
+  {
+    "request": {
+      "path": "used",
+      "mbean": "java.lang:type=Memory",
+      "attribute": "HeapMemoryUsage",
+      "type": "read"
+    },
+    "value": 1677728568,
+    "timestamp": 1520095218,
+    "status": 200
+  },
+  {
+    "request": {
+      "path": "max",
+      "mbean": "java.lang:type=Memory",
+      "attribute": "HeapMemoryUsage",
+      "type": "read"
+    },
+    "value": 5368709120,
+    "timestamp": 1520095218,
+    "status": 200
+  },
+  {
+    "request": {
+      "mbean": "java.lang:type=Threading",
+      "attribute": "ThreadCount",
+      "type": "read"
+    },
+    "value": 421,
+    "timestamp": 1520095218,
+    "status": 200
+  },
+  {
+    "request": {
+      "mbean": "java.lang:type=OperatingSystem",
+      "type": "read"
+    },
+    "value": {
+      "OpenFileDescriptorCount": 504,
+      "CommittedVirtualMemorySize": 17298624512,
+      "FreePhysicalMemorySize": 562003968,
+      "SystemLoadAverage": 9.57,
+      "Arch": "amd64",
+      "ProcessCpuLoad": 0.00015816498252695858,
+      "FreeSwapSpaceSize": 0,
+      "TotalPhysicalMemorySize": 50640719872,
+      "Name": "Linux",
+      "ObjectName": {
+        "objectName": "java.lang:type=OperatingSystem"
+      },
+      "TotalSwapSpaceSize": 0,
+      "ProcessCpuTime": 1950830000000,
+      "MaxFileDescriptorCount": 1048576,
+      "SystemCpuLoad": 0.12814549044501783,
+      "Version": "4.4.0-112-generic",
+      "AvailableProcessors": 16
+    },
+    "timestamp": 1520095218,
+    "status": 200
+  }
+]

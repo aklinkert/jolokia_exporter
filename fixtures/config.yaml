@@ -1,0 +1,18 @@
+metrics:
+- source:
+    mbean: java.lang:type=Memory
+    attribute: HeapMemoryUsage
+    path: used
+  target: java_memory_heap_memory_usage_used
+- source:
+    mbean: java.lang:type=Memory
+    attribute: HeapMemoryUsage
+    path: max
+  target: java_memory_max
+- source:
+    mbean: java.lang:type=Threading
+    attribute: ThreadCount
+  target: java_threading_thread_count
+- source:
+    mbean: java.lang:type=OperatingSystem
+  target: java_os

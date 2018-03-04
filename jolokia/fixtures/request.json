@@ -1,0 +1,1 @@
+[{"type":"read","attribute":"HeapMemoryUsage","mbean":"java.lang:type=Memory","path":"used"},{"type":"read","attribute":"HeapMemoryUsage","mbean":"java.lang:type=Memory","path":"max"},{"type":"read","attribute":"ThreadCount","mbean":"java.lang:type=Threading"},{"type":"read","mbean":"java.lang:type=OperatingSystem"}]
