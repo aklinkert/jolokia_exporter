@@ -40,8 +40,11 @@ type Request []RequestMetric
 
 // Response is a jolokia response with metrics
 type Response []struct {
-	Request RequestMetric   `json:"request"`
-	Value   json.RawMessage `json:"value"`
+	Request   RequestMetric   `json:"request"`
+	Value     json.RawMessage `json:"value"`
+	Error     string          `json:"error"`
+	ErrorType string          `json:"error_type"`
+	Status    uint            `json:"status"`
 }
 
 // SimpleValue holds a numeric value returned by jolokia

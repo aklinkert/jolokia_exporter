@@ -64,6 +64,8 @@ func NewExporter(logger log.Logger, config *Config, namespace string, insecure b
 		return nil, err
 	}
 
+	logger.Debugf("Prepared jolokia request: %s", exporter.requestBody)
+
 	return exporter, nil
 }
 
@@ -113,14 +115,21 @@ func (e *Exporter) collect(ch chan<- prometheus.Metric) error {
 	e.logger.Debugf("Result has %d rows", len(response))
 
 	for _, metric := range response {
+		if metric.Status != 200 {
+			log.Errorf("unable to get metric for %s: %d %v %v", metric.Request.String(), metric.Status, metric.ErrorType, metric.Error)
+			continue
+		}
+
 		target, ok := e.metricMapping[metric.Request.String()]
 		if !ok {
 			log.Errorf("Unable to find mapping for key %s", metric.Request.String())
+			continue
 		}
 
 		values, err := getValues(target, metric.Value)
 		if err != nil {
 			log.Warnf("Failed to handle value %s for metric %s as understandable value: %v", metric.Value, metric.Request.String(), err)
+			continue
 		}
 
 		for key, value := range values {

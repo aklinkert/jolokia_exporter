@@ -49,7 +49,7 @@ var exportCmd = &cobra.Command{
 			logger.SetLevel("debug")
 			logger.Debug("Starting in debug level")
 		} else {
-			logger.SetLevel("warn")
+			logger.SetLevel("info")
 		}
 		exp, err := jolokia.NewExporter(logger, config, jolokia.Namespace, insecure, endpoint, basicAuthUser, basicAuthPassword)
 		if err != nil {
