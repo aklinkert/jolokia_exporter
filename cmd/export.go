@@ -27,7 +27,7 @@ var (
 
 // exportCmd represents the export command
 var exportCmd = &cobra.Command{
-	Use:   "export <metrics-config-file> endpoint",
+	Use:   "export <metrics-config-file> <endpoint>",
 	Short: "Exports jolokia metrics from given endpoint, using given metrics mapping config",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {

@@ -14,7 +14,7 @@ The exporter is configured using command line flags and arguments. Usage is as f
 Exports jolokia metrics from given endpoint, using given metrics mapping config
 
 Usage:
-  jolokia_exporter export <metrics-config-file> endpoint [flags]
+  jolokia_exporter export <metrics-config-file> <endpoint> [flags]
 
 Flags:
       --basic-auth-password string   HTTP Basic auth password for authentication on the jolokia endpoint
@@ -24,9 +24,6 @@ Flags:
   -i, --insecure                     Whether to use insecure https mode, i.e. skip ssl cert validation (only useful with https endpoint)
   -l, --listen string                Host/Port the exporter should listen listen on (default ":9422")
   -v, --verbose                      Whether to use verbose https mode
-
-Global Flags:
-      --config string   config file (default is $HOME/.jolokia_exporter.yaml)
 ```
 
 Example usage in a docker-compose file:
@@ -57,6 +54,31 @@ services:
     ports:
       - "9422:9422"
 ```
+
+The exporter loads a configuration file, containing information about how to resolve mbean data:
+
+```yaml
+metrics:
+- source:
+    mbean: java.lang:type=Memory
+    attribute: HeapMemoryUsage
+    path: used
+  target: java_memory_heap_memory_usage_used
+- source:
+    mbean: java.lang:type=Memory
+    attribute: HeapMemoryUsage
+    path: max
+  target: java_memory_max
+- source:
+    mbean: java.lang:type=Threading
+    attribute: ThreadCount
+  target: java_threading_thread_count
+- source:
+    mbean: java.lang:type=OperatingSystem
+  target: java_os
+```
+
+More information on how to specify mbeans can be found in the [Jolokia docs](https://jolokia.org/reference/html/protocol.html#post-request). For a complete example have a look into the `fixtures` directory and the `docker-compose.yml`
 
 # license
 
